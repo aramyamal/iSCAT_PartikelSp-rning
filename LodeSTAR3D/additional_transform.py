@@ -1,4 +1,4 @@
-from generator import generate_canada
+from generator import generate_particle
 from deeplay.applications.detection.lodestar.transforms import Transform
 import torch
 import numpy as np
@@ -7,22 +7,28 @@ class RandomTranslationZ(Transform):
     def __init__(self, dz=lambda: np.random.uniform(-3, 3)):
         indices = (2,)
         super().__init__(self._forward, self._backward, dz=dz, indices=indices)
-    
-    def _forward(self, x, dz, indices):
 
-        images = []
+    @staticmethod 
+    def _forward(x, dz, indices):
 
         radius = lambda: np.random.uniform(45e-9, 55e-9)
         polarization_angle = lambda: np.random.rand() * 2 * np.pi
         ph= 1/16*np.pi
 
+        batch_size = x.shape[0]
+        color_channels = 1 # DeepTrack creates grayscale images
         image_size = 64
-        for dz_one in dz:
-            image = generate_canada(image_size, z = float(dz_one), radius=radius, polarization_angle=polarization_angle, ph=ph)
+        
+        transformed = torch.empty((batch_size, color_channels, image_size, image_size))
+
+        for i, dz_one in enumerate(dz):
+            image = generate_particle(image_size, z = float(dz_one), 
+                                    radius=radius, 
+                                    polarization_angle=polarization_angle, 
+                                    ph=ph)
             image = torch.tensor(image).permute(2, 0, 1)
-            image = image
-            images.append(image)
-        transformed = torch.stack(images).float()
+            transformed[i] = image
+            
         return transformed.to(x.device)
         
     @staticmethod
@@ -37,7 +43,7 @@ class RandomScaleImage(Transform):
 
     @staticmethod
     def _forward(x, scale):
-        return x * scale
+        return x * scale.view(-1, 1, 1, 1).to(x.device)
 
     @staticmethod
     def _backward(x, scale):
