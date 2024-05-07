@@ -1,4 +1,4 @@
-from train_and_trace3d.train.generator import generate_particle
+from train.generator import generate_particle
 from deeplay.applications.detection.lodestar.transforms import Transform
 import torch
 import numpy as np

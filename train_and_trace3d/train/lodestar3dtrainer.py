@@ -1,4 +1,4 @@
-from additional_transforms import *
+from train.additional_transforms import *
 from deeplay.applications.detection.lodestar.transforms import *
 import deeplay as dl
 import torch
