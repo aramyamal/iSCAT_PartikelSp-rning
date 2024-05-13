@@ -29,11 +29,11 @@ class MAGIK():
                  dataframe = None,
                  data_shape = (1,800,750)):
 
-        self.weigths_path = os.getcwd()+"/MAGIK.h5"
-        self.spat_temp_res = 3
-        self.th = 1
-        self.dataframe = None
-        self.data_shape = (1,800,750)
+        self.weigths_path = weights_path
+        self.spat_temp_res = spat_temp_res
+        self.th = th
+        self.dataframe = dataframe
+        self.data_shape = data_shape
 
     def load_dataframe(self, path):
 
