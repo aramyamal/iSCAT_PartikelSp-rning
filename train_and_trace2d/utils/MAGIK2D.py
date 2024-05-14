@@ -27,13 +27,19 @@ class MAGIK():
                  spat_temp_res = 3,
                  th = 1,
                  dataframe = None,
-                 data_shape = (1,800,750)):
+                 data_shape = (1,800,750),
+                 dataset = None):
 
         self.weigths_path = weights_path
         self.spat_temp_res = spat_temp_res
         self.th = th
         self.dataframe = dataframe
         self.data_shape = data_shape
+        self.dataset = dataset
+
+        # normalize the data for compatibility with MAGIK
+        self.dataframe['centroid-0'] /= self.data_shape[2]
+        self.dataframe['centroid-1'] /= self.data_shape[1]
 
     def load_dataframe(self, path):
         """Load a dataframe from path.
@@ -103,7 +109,7 @@ class MAGIK():
         if kwargs.get('clear', True):
             clear_output()
 
-    def detect(self, dataset_frames=(0,10), setup=False, **kwargs):
+    def detect(self, dataset_frames=(0,10), setup=False, plot_every_nth=1, **kwargs):
         """Plot the detections and trajectories from MAGIK.
         Note again that centroid-0 is assumed to be the x position and centroid-1 the y position."""
         # Note again that centroid-0 is assumed to be the x position and centroid-1 the y position 
@@ -111,21 +117,22 @@ class MAGIK():
         if not hasattr(self, 'traj') or setup:
             self.setup(**kwargs)
         f=dataset_frames[0]
-        for frame in self.dataset[dataset_frames[0]:dataset_frames[1]]:
+        for frame_index, frame in enumerate(self.dataset[dataset_frames[0]:dataset_frames[1]]):
         
-            fig = plt.figure()
-            plt.imshow(frame.squeeze(), cmap='gray')
-            plt.text(10, 40, "Bild: " + str(f), fontsize=20, c="white")
-            plt.axis("off")
+            if (frame_index + 1) % plot_every_nth == 0:
+                fig = plt.figure()
+                plt.imshow(frame.squeeze(), cmap='gray')
+                plt.text(10, 40, "Bild: " + str(f), fontsize=20, c="white")
+                plt.axis("off")
 
-            for i, (t, c) in enumerate(self.traj):
-                detections = self.nodes[t][(self.nodes[t, 0] <= f) & (self.nodes[t, 0] >= f - 20), :]
+                for i, (t, c) in enumerate(self.traj):
+                    detections = self.nodes[t][(self.nodes[t, 0] <= f) & (self.nodes[t, 0] >= f - 20), :]
 
-                if (len(detections) == 0) or (np.max(self.nodes[t, 0]) < f):
-                    continue
-                
-                plt.plot(detections[:, 1] * self.data_shape[2], detections[:, 2] * self.data_shape[1], color = c, linewidth=2)
-                plt.scatter(detections[-1, 1] * self.data_shape[2], detections[-1, 2] * self.data_shape[1], linewidths=1.5, c = c)
-                
+                    if (len(detections) == 0) or (np.max(self.nodes[t, 0]) < f):
+                        continue
+                    
+                    plt.plot(detections[:, 1] * self.data_shape[2], detections[:, 2] * self.data_shape[1], color = c, linewidth=2)
+                    plt.scatter(detections[-1, 1] * self.data_shape[2], detections[-1, 2] * self.data_shape[1], linewidths=1.5, color = c)
+                    
+                plt.show()
             f += 1
-            plt.show()
