@@ -36,23 +36,20 @@ class MAGIK():
         self.data_shape = data_shape
 
     def load_dataframe(self, path):
-
-        # Load a dataframe from path
-        # centroid-0 is assumed to be x position and centroid-1 to be y position
+        """Load a dataframe from path.
+        centroid-0 is assumed to be x position and centroid-1 to be y position."""
 
         self.dataframe = pd.read_csv(path)
         self.dataframe['centroid-0'] /= self.data_shape[2]
         self.dataframe['centroid-1'] /= self.data_shape[1]
 
     def set_dataset(self, dataset):
-
-        # Set dataset that is used for showing detections
+        """Set dataset that is used for showing detections."""
 
         self.dataset = dataset
 
     def load_network(self, weigths_path):
-
-        # Load pre-trained MAGIK network from weigths_path
+        """Load pre-trained MAGIK network from weigths_path."""
 
         self._OUTPUT_TYPE = 'edges'
         self.radius = 0.03
@@ -77,8 +74,7 @@ class MAGIK():
         self.model.load_weights(weigths_path)
     
     def create_nodes(self, spat_temp_res):
-
-        # Create nodes with a spatio temporal resolution of spat_temp_res
+        """Create nodes with a spatio temporal resolution of spat_temp_res."""
 
         variables = dt.DummyFeature(
             radius=self.radius,
@@ -94,14 +90,12 @@ class MAGIK():
         self.edges_df, self.nodes, _ = dt.models.gnns.df_from_results(pred, gt, scores, graph)
 
     def create_trajectories(self, th):
-
-        # Create trajectories with a threshold of th
+        """Create trajectories with a threshold of th."""
 
         self.traj = dt.models.gnns.get_traj(self.edges_df, th=th)
 
     def setup(self, **kwargs):
-
-        # Setup the nodes, edges and trajectories
+        """Setup the nodes, edges and trajectories."""
 
         self.load_network(kwargs.get('weigths_path', self.weigths_path))
         self.create_nodes(kwargs.get('spat_time_res', self.spat_temp_res))
@@ -110,8 +104,8 @@ class MAGIK():
             clear_output()
 
     def detect(self, dataset_frames=(0,10), setup=False, **kwargs):
-
-        # Plot the detections and trajectories from MAGIK
+        """Plot the detections and trajectories from MAGIK.
+        Note again that centroid-0 is assumed to be the x position and centroid-1 the y position."""
         # Note again that centroid-0 is assumed to be the x position and centroid-1 the y position 
 
         if not hasattr(self, 'traj') or setup:
