@@ -5,7 +5,7 @@
 > - The MAGIK implementation in [DeepTrack](https://github.com/DeepTrackAI/DeepTrack2)
 > - The LodeSTAR implementation in [Deeplay](https://github.com/DeepTrackAI/deeplay)
 > 
-> We want to emphasize that these fundamental components were not developed by us, but we built upon their excellent work.
+> We want to emphasize that these components were not developed by us, but we built upon their excellent work.
 
 In the spring of 2024, we (the collaborators of this repository) did a joint bachelor thesis project in Physics at Chalmers University of Technology. The project title was *Nanoparticle tracking with iSCAT and machine learning* or *Spårning av nanopartiklar med iSCAT och maskininlärning* in Swedish. The project is published and available on Chalmers Open Digital Repository [here](https://odr.chalmers.se/items/c62d19ca-2549-4139-b840-9ccaa8460a30).
 
@@ -23,21 +23,21 @@ Our study focused on tracking 100 nm particles using iSCAT microscopy in both tw
    - Particle diffusivity calculations.
 
 3. Extension to 3D tracking:
-   - By modifications to the LodeSTAR method allowing training on synthesized images of particles at various depths. Synthesized images created with [DeepTrack](https://github.com/DeepTrackAI/DeepTrack2).
+   - By modifications to the LodeSTAR method allowing training on synthesized images of particles created with [DeepTrack](https://github.com/DeepTrackAI/DeepTrack2) at various depths.
    - Evaluation through comparison of experimental and theoretical diffusivity values for trajectories.
    - Analysis of trajectories and covariances in the z-dimension.
 
 ## Key Findings
 ### 2D Tracking
 - RVT better showed expected evidence of Brownian motion in particle detections than LodeSTAR.
-- LodeSTAR demonstrated superior performance in:
+- LodeSTAR demonstrated better performance in:
   - Number of correctly predicted particles.
   - Tracking trajectories over extended time period.
 
 ### 3D Tracking
 - LodeSTAR extracted depth information to some degree.
 - Current accuracy has limitations for useful 3D detections.
-- Potential for improvement of the method through enhanced synthesized training data and higher temporal resolution of microscopy videos tested on.
+- Potential for improvements of the method through enhanced synthesized training data and higher temporal resolution of microscopy videos.
 
 ## Usage
 Directly under ```train_and_trace3d/``` and ```train_and_trace2d/``` lays Jupyter notebooks with examples of how the training, tracking and analysis was done for 3D-, respectively, 2D-tracking.
