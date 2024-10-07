@@ -7,7 +7,7 @@
 > 
 > We want to emphasize that these components were not developed by us, but we built upon their excellent work.
 
-In the spring of 2024, we (the collaborators of this repository) did a joint bachelor thesis project in Physics at Chalmers University of Technology. The project title was *Nanoparticle tracking with iSCAT and machine learning* or *Spårning av nanopartiklar med iSCAT och maskininlärning* in Swedish. The project is published and available on Chalmers Open Digital Repository [here](https://odr.chalmers.se/items/c62d19ca-2549-4139-b840-9ccaa8460a30).
+In the spring of 2024, we (the collaborators of this repository) did a joint bachelor thesis project in Physics at Chalmers University of Technology. The project title was *Nanoparticle tracking with iSCAT and machine learning* or *Spårning av nanopartiklar med iSCAT och maskininlärning* in Swedish. The thesis is published and available on Chalmers Open Digital Repository [here](https://odr.chalmers.se/items/c62d19ca-2549-4139-b840-9ccaa8460a30).
 
 This repository contains Jupyter notebooks with examples of how to recreate the results presented in the thesis.
 
