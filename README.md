@@ -50,4 +50,4 @@ Directly under ```train_and_trace3d/``` and ```train_and_trace2d/``` lays Jupyte
 ## Acknowledgments
 - Daniel Midtvedt at Gothenburg University for being our supervisor.
 - Erik Olsén at University of British Columbia for providing iSCAT microscopy footage.
-- The team behind DeepTrack and Deeplay for their implementations.
+- The teams behind DeepTrack and Deeplay for their implementations.
